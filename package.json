@@ -1,0 +1,20 @@
+{
+  "name": "minecraft-addon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts.js build",
+    "package": "node scripts.js package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShiCheng-Lu/minecraft-addons.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShiCheng-Lu/minecraft-addons/issues"
+  },
+  "homepage": "https://github.com/ShiCheng-Lu/minecraft-addons#readme"
+}

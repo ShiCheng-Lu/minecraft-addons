@@ -6,8 +6,7 @@
   "scripts": {
     "build": "tsc -p .",
     "postbuild": "node postbuild.js",
-    "package": "zip -rq %npm_package_name%.mcaddon behaviour_pack resource_pack -x behaviour_pack/src/**",
-    "test": "echo %npm_package_name%"
+    "prepare": "zip -rq %npm_package_name%.mcaddon behaviour_pack resource_pack -x behaviour_pack/src/**"
   },
   "repository": {
     "type": "git",

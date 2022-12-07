@@ -2,7 +2,19 @@ const fse = require('fs-extra');
 
 const packName = process.env.npm_package_name
 
-const gameDataFolder = "C:/Users/shich/AppData/Local/Packages/Microsoft.MinecraftUWP_8wekyb3d8bbwe/LocalState/games/com.mojang"
+function findGameFolder() {
+    const root = "C:/Users"
+    const game = "AppData/Local/Packages/Microsoft.MinecraftUWP_8wekyb3d8bbwe/LocalState/games/com.mojang"
+
+    for (user of fse.readdirSync(root)) {
+        const path = `${root}/${user}/${game}`
+        if (fse.existsSync(path)) {
+            return path;
+        }
+    }
+}
+
+const gameDataFolder = findGameFolder()
 const behaviourDest = `${gameDataFolder}/development_behavior_packs/${packName}`
 fse.rmSync(behaviourDest, { recursive: true, force: true })
 fse.copySync("behaviour_pack", behaviourDest, { filter: (src, _) => !src.match(/behaviour_pack.src/) })
