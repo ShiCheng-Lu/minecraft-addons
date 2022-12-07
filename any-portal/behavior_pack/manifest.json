@@ -29,10 +29,6 @@
         {
             "module_name": "@minecraft/gametest",
             "version": "1.0.0-beta"
-        },
-        {
-            "uuid":"f3c987cf-266c-4521-9dbe-0f0a603cf8e1",
-            "version": "1.0.0"
         }
     ]
 }

@@ -16,7 +16,7 @@ function findGameFolder() {
 
 function dirExistAndNotEmpty(path) {
     if (!fse.existsSync(path)) return false;
-    if (fse.readdirSync("ndsf").length == 0) return false;
+    if (fse.readdirSync(path).length == 0) return false;
 
     return true;
 }
