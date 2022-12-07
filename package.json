@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "new": "node scripts.js new",
     "build": "node scripts.js build",
     "package": "node scripts.js package"
   },
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/ShiCheng-Lu/minecraft-addons/issues"
   },
-  "homepage": "https://github.com/ShiCheng-Lu/minecraft-addons#readme"
+  "homepage": "https://github.com/ShiCheng-Lu/minecraft-addons#readme",
+  "dependencies": {
+    "fs-extra": "^11.1.0"
+  }
 }
