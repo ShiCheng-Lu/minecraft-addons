@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Exp Bottle",
         "description": "",
-        "uuid": "{{uuid-behavior}}",
+        "uuid": "ab8f52f5-4021-4622-8c07-4f941eb1c275",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
@@ -11,7 +11,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "{{uuid-behavior-module}}",
+            "uuid": "fcc339c0-2a9a-415e-b502-8d3e8aeef5b9",
             "entry": "scripts/server/index.js",
             "version": "1.0.0"
         }
@@ -31,7 +31,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "uuid":"{{uuid-resource}}",
+            "uuid":"441e19c9-5001-4c81-aeec-6d04c59a6383",
             "version": "1.0.0"
         }
     ]

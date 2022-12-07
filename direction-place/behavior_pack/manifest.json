@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Directional Place",
         "description": "",
-        "uuid": "{{uuid-behavior}}",
+        "uuid": "a00bb59e-dcbc-492a-be02-9c96e42f4be0",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
@@ -11,7 +11,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "{{uuid-behavior-module}}",
+            "uuid": "18675ef0-bc23-4b1a-b1d3-030f032c578e",
             "entry": "scripts/server/index.js",
             "version": "1.0.0"
         }
@@ -31,7 +31,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "uuid":"{{uuid-resource}}",
+            "uuid":"a8c759ba-63dc-4269-ab49-b7593b00fbde",
             "version": "1.0.0"
         }
     ]

@@ -1,16 +1,16 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Display",
         "description": "",
-        "uuid": "{{uuid-resource}}",
+        "uuid": "80f04258-bc26-45c7-ac7f-395daae12bfc",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
     "modules": [
         {
             "type": "resources",
-            "uuid": "{{uuid-resource-module}}",
+            "uuid": "952ea5ab-262f-46c9-b2a1-eeb81c9cad60",
             "version": "1.0.0"
         }
     ],

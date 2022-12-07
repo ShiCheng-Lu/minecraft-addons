@@ -1,16 +1,16 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Any Portal",
         "description": "",
-        "uuid": "{{uuid-resource}}",
+        "uuid": "f3c987cf-266c-4521-9dbe-0f0a603cf8e1",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
     "modules": [
         {
             "type": "resources",
-            "uuid": "{{uuid-resource-module}}",
+            "uuid": "65650a44-034e-4e9f-8ed6-8ed7d769e011",
             "version": "1.0.0"
         }
     ],

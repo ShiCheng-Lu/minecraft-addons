@@ -3,9 +3,9 @@ const { randomUUID } = require("crypto")
 const fse = require("fs-extra")
 
 function newProject(name) {
-    // if (fse.existsSync(name)) {
-    //     return console.log("project already exist")
-    // }
+    if (fse.existsSync(name)) {
+        return console.log("project already exist")
+    }
     fse.copySync("template", `${name}`)
 
     const uuidMap = {
@@ -13,16 +13,19 @@ function newProject(name) {
         "{{uuid-behavior-module}}": randomUUID(),
         "{{uuid-resource}}": randomUUID(),
         "{{uuid-resource-module}}": randomUUID(),
-        "{{name}}": name
+        "{{name}}": name,
+        "{{pack-name}}": process.argv[4]
     }
 
     for (fileName of ["behavior_pack/manifest.json", "resource_pack/manifest.json", "package.json"]) {
         var file = fse.readFileSync(`${name}/${fileName}`, { encoding: 'utf-8' });
         for (key in uuidMap) {
-            file = file.replace(key, uuidMap[key])
+            file = file.replaceAll(key, uuidMap[key])
         }
         fse.writeFileSync(`${name}/${fileName}`, file, { encoding: 'utf-8' });
     }
+
+    execSync(`cd ${name} & npm install`);
 }
 
 function main() {

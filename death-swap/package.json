@@ -1,12 +1,12 @@
 {
-    "name": "{{name}}",
+    "name": "death-swap",
     "version": "1.0.0",
     "description": "",
     "main": "behavior_pack/src/index.js",
     "scripts": {
       "build": "tsc -p .",
       "postbuild": "node postbuild.js",
-      "package": "zip -rq {{name}}.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
+      "package": "zip -rq death-swap.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
     },
     "keywords": [
       "minecraft"

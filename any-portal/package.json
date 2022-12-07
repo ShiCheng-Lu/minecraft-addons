@@ -1,5 +1,5 @@
 {
-    "name": "{{name}}",
+    "name": "any-portal",
     "version": "1.0.0",
     "description": "",
     "main": "behavior_pack/src/index.js",

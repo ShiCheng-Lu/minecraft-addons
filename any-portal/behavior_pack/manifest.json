@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Any Portal",
         "description": "",
-        "uuid": "{{uuid-behavior}}",
+        "uuid": "e0bbd325-0a4a-4e15-aa66-2bf3b6d61562",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
@@ -11,7 +11,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "{{uuid-behavior-module}}",
+            "uuid": "88a01057-d4c4-407f-8a65-6dd7617634f8",
             "entry": "scripts/server/index.js",
             "version": "1.0.0"
         }
@@ -31,7 +31,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "uuid":"{{uuid-resource}}",
+            "uuid":"f3c987cf-266c-4521-9dbe-0f0a603cf8e1",
             "version": "1.0.0"
         }
     ]

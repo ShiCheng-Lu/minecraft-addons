@@ -1,16 +1,16 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Directional Place",
         "description": "",
-        "uuid": "{{uuid-resource}}",
+        "uuid": "a8c759ba-63dc-4269-ab49-b7593b00fbde",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
     "modules": [
         {
             "type": "resources",
-            "uuid": "{{uuid-resource-module}}",
+            "uuid": "b687b1fc-c178-4020-a331-647e9fc93d27",
             "version": "1.0.0"
         }
     ],

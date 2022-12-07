@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Display",
         "description": "",
-        "uuid": "{{uuid-behavior}}",
+        "uuid": "bba19498-86f9-48c4-9a37-371721c00262",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
@@ -11,7 +11,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "{{uuid-behavior-module}}",
+            "uuid": "2aaed786-2955-4d55-b735-5eb09e232b42",
             "entry": "scripts/server/index.js",
             "version": "1.0.0"
         }
@@ -31,7 +31,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "uuid":"{{uuid-resource}}",
+            "uuid":"80f04258-bc26-45c7-ac7f-395daae12bfc",
             "version": "1.0.0"
         }
     ]

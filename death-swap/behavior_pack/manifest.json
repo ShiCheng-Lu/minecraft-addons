@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "{{pack-name}}",
+        "name": "Death Swap",
         "description": "",
-        "uuid": "{{uuid-behavior}}",
+        "uuid": "a1f8d503-494e-4ea7-8e54-5e717233d8b3",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
@@ -11,7 +11,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "{{uuid-behavior-module}}",
+            "uuid": "fdf30758-bf8d-41f8-a536-ea9d65fa3684",
             "entry": "scripts/server/index.js",
             "version": "1.0.0"
         }
@@ -31,7 +31,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "uuid":"{{uuid-resource}}",
+            "uuid":"132fec83-d21e-494c-ad7b-7778c074c6bd",
             "version": "1.0.0"
         }
     ]
