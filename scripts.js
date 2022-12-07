@@ -2,14 +2,14 @@ const { execSync } = require("child_process")
 const fse = require("fs-extra")
 
 function newProject(name) {
-    if (existsSync(name)) {
+    if (fse.existsSync(name)) {
         return console.log("project already exist")
     }
     // copy default packs from bedrock-samples
-    fse.copySync("bedrock-samples/behavior_pack", `${name}/behavior_pack`)
-    fse.copySync("bedrock-samples/resource_pack", `${name}/resource_pack`)
+    fse.copy("bedrock-samples/behavior_pack", `${name}/behavior_pack`)
+    fse.copy("bedrock-samples/resource_pack", `${name}/resource_pack`)
     // copy setup
-    fse.copySync("template", `${name}`)
+    fse.copy("template", `${name}`)
 }
 
 function main() {
