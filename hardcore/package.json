@@ -2,11 +2,11 @@
   "name": "hardcore",
   "version": "0.1.0",
   "description": "apply hardcore mode",
-  "main": "behaviour/src/index.js",
+  "main": "behavior_pack/src/index.js",
   "scripts": {
     "build": "tsc -p .",
     "postbuild": "node postbuild.js",
-    "prepare": "zip -rq %npm_package_name%.mcaddon behaviour_pack resource_pack -x behaviour_pack/src/**"
+    "prepare": "zip -rq %npm_package_name%.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
   },
   "repository": {
     "type": "git",

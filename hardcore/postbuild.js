@@ -17,7 +17,7 @@ function findGameFolder() {
 const gameDataFolder = findGameFolder()
 const behaviourDest = `${gameDataFolder}/development_behavior_packs/${packName}`
 fse.rmSync(behaviourDest, { recursive: true, force: true })
-fse.copySync("behaviour_pack", behaviourDest, { filter: (src, _) => !src.match(/behaviour_pack.src/) })
+fse.copySync("behavior_pack", behaviourDest, { filter: (src, _) => !src.match(/behavior_pack.src/) })
 
 const resourceDest = `${gameDataFolder}/development_resource_packs/${packName}`
 fse.rmSync(resourceDest, { recursive: true, force: true })

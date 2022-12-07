@@ -8,10 +8,10 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": false,
-        "outDir": "behaviour_pack/scripts/",
+        "outDir": "behavior_pack/scripts",
         "strict": true
     },
     "include": [
-        "behaviour_pack/src"
+        "behavior_pack/src"
     ]
 }
