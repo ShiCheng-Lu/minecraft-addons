@@ -27,7 +27,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "module_name": "@minecraft/gametest",
+            "module_name": "@minecraft/server-gametest",
             "version": "1.0.0-beta"
         }
     ]

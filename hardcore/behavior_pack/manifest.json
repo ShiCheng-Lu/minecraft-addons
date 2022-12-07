@@ -28,6 +28,7 @@
         },
         {
             "uuid":"4f6c962e-60a0-48b5-a312-22329a47d46a",
+            "name": "resource pack",
             "version": "0.1.0"
         }
     ]

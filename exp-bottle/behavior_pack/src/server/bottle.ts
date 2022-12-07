@@ -1,4 +1,4 @@
-import { Entity, world } from "mojang-minecraft";
+import { Entity, world } from "@minecraft/server";
 
 function xpForLevel(level: number): number {
     if (level <= 15) {
