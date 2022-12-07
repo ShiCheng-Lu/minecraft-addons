@@ -13,9 +13,10 @@ function newProject(name) {
         "{{uuid-behavior-module}}": randomUUID(),
         "{{uuid-resource}}": randomUUID(),
         "{{uuid-resource-module}}": randomUUID(),
+        "{{name}}": name
     }
 
-    for (fileName of ["behavior_pack/manifest.json", "resource_pack/manifest.json"]) {
+    for (fileName of ["behavior_pack/manifest.json", "resource_pack/manifest.json", "package.json"]) {
         var file = fse.readFileSync(`${name}/${fileName}`, { encoding: 'utf-8' });
         for (key in uuidMap) {
             file = file.replace(key, uuidMap[key])
