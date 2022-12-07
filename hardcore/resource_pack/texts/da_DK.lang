@@ -1,0 +1,8 @@
+deathScreen.message=Du døde!	#
+deathScreen.respawn=Respawn	#
+deathScreen.title=Du døde!	#
+deathScreen.title.hardcore=Game over!	#
+deathScreen.titleScreen=Titelskærm	#
+selectWorld.gameMode.spectator=Tilskuer	#
+selectWorld.gameMode.spectator.line1=Du kan se, men ikke røre	#
+selectWorld.gameMode.spectator.line2=	#

@@ -1,0 +1,8 @@
+deathScreen.message=Πέθανες!	#
+deathScreen.respawn=Επαναγένεση	#
+deathScreen.title=Πέθανες!	#
+deathScreen.title.hardcore=Τέλος παιχνιδιού!	#
+deathScreen.titleScreen=Οθόνη τίτλου	#
+selectWorld.gameMode.spectator=Θεατής	#
+selectWorld.gameMode.spectator.line1=Μπορείς να κοιτάς αλλά δεν αγγίζεις	#
+selectWorld.gameMode.spectator.line2=	#

@@ -1,0 +1,8 @@
+deathScreen.message=Kuolit!	#
+deathScreen.respawn=Palaa peliin	#
+deathScreen.title=Kuolit!	#
+deathScreen.title.hardcore=Game over!	#
+deathScreen.titleScreen=Aloitusnäyttö	#
+selectWorld.gameMode.spectator=Katsoja	#
+selectWorld.gameMode.spectator.line1=Voit katsoa muttet koskea	#
+selectWorld.gameMode.spectator.line2=	#

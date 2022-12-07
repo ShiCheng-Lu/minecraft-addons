@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "Hardcore Mode",
+        "description": "Hardcore mode where you only have one life. Death is permanent.",
+        "uuid": "4f6c962e-60a0-48b5-a312-22329a47d46a",
+        "version": "0.1.0",
+        "min_engine_version": [1, 19, 50]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "a202317e-2293-48c5-a710-9ec992a9bcf3",
+            "version": "0.1.0"
+        }
+    ],
+    "dependencies": []
+}

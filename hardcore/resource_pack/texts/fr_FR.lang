@@ -1,0 +1,8 @@
+deathScreen.message=Vous êtes mort(e) !	#
+deathScreen.respawn=Ressusciter	#
+deathScreen.title=Vous êtes mort(e) !	#
+deathScreen.title.hardcore=Game over !	#
+deathScreen.titleScreen=Menu principal	#
+selectWorld.gameMode.spectator=Spectateur	#
+selectWorld.gameMode.spectator.line1=Vous pouvez regarder mais pas toucher	#
+selectWorld.gameMode.spectator.line2=	#
