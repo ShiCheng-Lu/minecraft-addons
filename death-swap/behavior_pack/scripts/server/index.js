@@ -1,12 +1,9 @@
-import { BeforeChatEvent, world } from "@minecraft/server"
-import * as DeathSwap from "./swap.js"
-
-
+import { world } from "@minecraft/server";
+import * as DeathSwap from "./swap.js";
 world.events.beforeChat.subscribe(handleCustomCommand);
-
-function handleCustomCommand(arg: BeforeChatEvent) {
-    if (!arg.message.startsWith('.')) return;
-
+function handleCustomCommand(arg) {
+    if (!arg.message.startsWith('.'))
+        return;
     switch (arg.message) {
         case ".start": {
             const cmd_args = arg.message.split(' ');
@@ -21,7 +18,8 @@ function handleCustomCommand(arg: BeforeChatEvent) {
                     dist: parseInt(cmd_args[5]),
                     range: parseInt(cmd_args[6]),
                 }, DeathSwap.default_option);
-            } catch (e) {
+            }
+            catch (e) {
                 console.warn(e);
             }
             DeathSwap.start(options);
@@ -40,17 +38,16 @@ function handleCustomCommand(arg: BeforeChatEvent) {
                     dist: parseInt(cmd_args[5]),
                     range: parseInt(cmd_args[6]),
                 }, DeathSwap.default_funky);
-            } catch (e) {
+            }
+            catch (e) {
                 console.warn(e);
             }
             DeathSwap.start(options);
             break;
         }
         case ".help": {
-            arg.message = (
-                `\nstartgame` +
-                `\nstartgame [grace period] [average time] [x] [y] [dist] [range]`
-            )
+            arg.message = (`\nstartgame` +
+                `\nstartgame [grace period] [average time] [x] [y] [dist] [range]`);
             return;
         }
     }
