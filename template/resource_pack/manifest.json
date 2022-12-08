@@ -1,8 +1,8 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Pack name",
-        "description": "Pack description",
+        "name": "{{pack-name}}",
+        "description": "",
         "uuid": "{{uuid-resource}}",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]

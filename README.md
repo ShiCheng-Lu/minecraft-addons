@@ -7,4 +7,3 @@ This repository holds all my minecraft addons, in addition, there are some helpf
 `npm run build <name>` builds the project with name
 
 `npm run package <name>` creates a .mcaddon file with the name
-

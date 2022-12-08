@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "Exp Bottle",
+        "description": "",
+        "uuid": "441e19c9-5001-4c81-aeec-6d04c59a6383",
+        "version": "1.0.0",
+        "min_engine_version": [1, 19, 50]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "a31cb574-1985-4aa1-b3f9-654030be6f27",
+            "version": "1.0.0"
+        }
+    ],
+    "dependencies": []
+}

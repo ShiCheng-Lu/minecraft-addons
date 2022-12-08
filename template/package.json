@@ -4,19 +4,22 @@
     "description": "",
     "main": "behavior_pack/src/index.js",
     "scripts": {
-      "build": "tsc -p .",
-      "postbuild": "node postbuild.js",
-      "prepare": "zip -rq {{name}}.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
+        "build": "tsc -p .",
+        "postbuild": "node postbuild.js",
+        "prepackage": "tsc -p .",
+        "package": "zip -rq {{name}}.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
     },
     "keywords": [
-      "minecraft"
+        "minecraft"
     ],
     "author": "ShiCheng Lu",
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-      "@minecraft/server": "1.1.0-beta.release.1.19.50",
-      "typescript": "^4.5.2",
-      "fs-extra": "^11.1.0"
+        "@minecraft/server": "^1.1.0-beta.release.1.19.50",
+        "@minecraft/server-ui": "^1.0.0-beta.11940b24",
+        "@minecraft/gametest": "^1.0.0-beta.11940b24",
+        "typescript": "^4.5.2",
+        "fs-extra": "^11.1.0"
     }
-  }
+}

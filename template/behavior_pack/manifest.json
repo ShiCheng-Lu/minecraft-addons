@@ -1,8 +1,8 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Pack name",
-        "description": "Pack description",
+        "name": "{{pack-name}}",
+        "description": "",
         "uuid": "{{uuid-behavior}}",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
@@ -27,7 +27,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "module_name": "@minecraft/gametest",
+            "module_name": "@minecraft/server-gametest",
             "version": "1.0.0-beta"
         },
         {
