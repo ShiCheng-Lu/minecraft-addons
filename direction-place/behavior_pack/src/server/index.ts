@@ -11,10 +11,11 @@ world.events.beforeItemUseOn.subscribe((arg: BeforeItemUseOnEvent) => {
     const expectedDir = get_rotation(arg.faceLocationX, arg.faceLocationY, arg.blockFace)
     facing.value = map_by_item(arg.item.typeId, expectedDir) // some item has facing direction that are not the regular expected
 
-    const f = world.events.blockPlace.subscribe((arg) => {
+    const f = world.events.blockPlace.subscribe((blockPlaceArg) => {
+        if (arg.blockLocation.blocksBetween(blockPlaceArg.block.location).length > 2) return;
         // set to air first so there is no persist on piston direction, messes with power direciton
-        arg.block.setPermutation(MinecraftBlockTypes.air.createDefaultBlockPermutation())
-        arg.block.setPermutation(perm)
+        blockPlaceArg.block.setPermutation(MinecraftBlockTypes.air.createDefaultBlockPermutation())
+        blockPlaceArg.block.setPermutation(perm)
     })
     system.run(() => world.events.blockPlace.unsubscribe(f));
 })
