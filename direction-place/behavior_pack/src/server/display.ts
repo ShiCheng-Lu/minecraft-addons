@@ -1,18 +1,12 @@
-import { MBCPlayer } from "mbcore-gametest";
-import { EntityQueryOptions, Player, world } from "mojang-minecraft";
+import { EntityQueryOptions, Player, world } from "@minecraft/server";
 
-world.events.tick.subscribe((arg) => {
-    for (const player of world.getPlayers()) {
-        const mcbplayer = MBCPlayer.get(player.nameTag);
-        if (player.isSneaking) {
-            const vectors = mcbplayer.getDirectionVectors();
+// world.events.tick.subscribe((arg) => {
+//     for (const player of world.getPlayers()) {
+//         if (player.isSneaking) {
+//             const i = player.getBlockFromViewVector({ maxDistance: 4 })
 
             
-
-
-
-
-
-        }
-    }
-})
+//             console.warn(i.typeId)
+//         }
+//     }
+// })
