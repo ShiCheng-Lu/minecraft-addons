@@ -1,28 +1,22 @@
-import { world, Player, BeforeItemUseOnEvent, BlockProperties, Direction, system, DirectionBlockProperty } from "@minecraft/server";
+import { world, Player, BeforeItemUseOnEvent, BlockProperties, Direction, DirectionBlockProperty, system, MinecraftBlockTypes } from "@minecraft/server";
 import { blocks } from "./blocks";
 import "./indicator";
 
 world.events.beforeItemUseOn.subscribe((arg: BeforeItemUseOnEvent) => {
     if (!(arg.source instanceof Player) || !arg.source.isSneaking || !blocks[arg.item.typeId]) return;
 
+    const perm = blocks[arg.item.typeId].type.createDefaultBlockPermutation();
+    const facing = perm.getProperty(BlockProperties.facingDirection) as DirectionBlockProperty
+
     const expectedDir = get_rotation(arg.faceLocationX, arg.faceLocationY, arg.blockFace)
-    const mappedDir = map_by_item(arg.item.typeId, expectedDir) // some item has facing direction that are not the regular expected
+    facing.value = map_by_item(arg.item.typeId, expectedDir) // some item has facing direction that are not the regular expected
 
-    const actor = arg.source;
-    // listen for place event
-    const placeEvent = world.events.blockPlace.subscribe(arg => {
-        if (arg.player === actor) {
-            const perm = arg.block.permutation;
-            const facing = perm.getProperty(BlockProperties.facingDirection) as DirectionBlockProperty
-
-            facing.value = mappedDir;
-            arg.block.setPermutation(perm);
-        }
-    });
-    const i = system.run(() => {
-        world.events.blockPlace.unsubscribe(placeEvent);
-        system.clearRun(i);
+    const f = world.events.blockPlace.subscribe((arg) => {
+        // set to air first so there is no persist on piston direction, messes with power direciton
+        arg.block.setPermutation(MinecraftBlockTypes.air.createDefaultBlockPermutation())
+        arg.block.setPermutation(perm)
     })
+    system.run(() => world.events.blockPlace.unsubscribe(f));
 })
 
 function map_by_item(item: string, dir: Direction) {
