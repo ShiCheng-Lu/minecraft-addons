@@ -3,26 +3,37 @@ import { blocks } from "./blocks";
 import "./indicator";
 
 world.events.beforeItemUseOn.subscribe((arg: BeforeItemUseOnEvent) => {
-    if (!(arg.source instanceof Player) || !arg.source.isSneaking || !blocks[arg.item.typeId]) return;
-
-    const perm = blocks[arg.item.typeId].type.createDefaultBlockPermutation();
-    const facing = perm.getProperty(BlockProperties.facingDirection) as DirectionBlockProperty
+    if (!(arg.source instanceof Player) || !arg.source.isSneaking) return;
 
     const expectedDir = get_rotation(arg.faceLocationX, arg.faceLocationY, arg.blockFace)
-    facing.value = map_by_item(arg.item.typeId, expectedDir) // some item has facing direction that are not the regular expected
+    const facing = map_by_item(arg.item.typeId, expectedDir) // some item has facing direction that are not the regular expected
 
-    const f = world.events.blockPlace.subscribe((blockPlaceArg) => {
-        if (arg.blockLocation.blocksBetween(blockPlaceArg.block.location).length > 2) return;
+    const block = arg.blockLocation
+
+    const f = world.events.blockPlace.subscribe((arg) => {
+        if (block.blocksBetween(arg.block.location).length > 2) return;
+
+        
+        const perm = arg.block.permutation
+        const facingProperty = perm.getProperty(BlockProperties.facingDirection) as DirectionBlockProperty
+
+        // direction, rotation
+
+        facingProperty.value = facing
         // set to air first so there is no persist on piston direction, messes with power direciton
-        blockPlaceArg.block.setPermutation(MinecraftBlockTypes.air.createDefaultBlockPermutation())
-        blockPlaceArg.block.setPermutation(perm)
+        arg.block.setPermutation(MinecraftBlockTypes.air.createDefaultBlockPermutation())
+        arg.block.setPermutation(perm)
     })
     system.run(() => world.events.blockPlace.unsubscribe(f));
 })
 
 function map_by_item(item: string, dir: Direction) {
-    const allDirs = [Direction.up, Direction.down, Direction.north, Direction.east, Direction.south, Direction.west]
-    return blocks[item].rotation[allDirs.indexOf(dir)]
+    if (blocks[item]) {
+        const allDirs = [Direction.up, Direction.down, Direction.north, Direction.east, Direction.south, Direction.west]
+        return blocks[item].rotation[allDirs.indexOf(dir)]
+    } else {
+        return dir;
+    }
 }
 
 function get_rotation(x: number, y: number, dir: Direction): Direction {

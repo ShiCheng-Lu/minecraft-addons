@@ -2,7 +2,7 @@
     "format_version": 2,
     "header": {
         "name": "Directional Place",
-        "description": "Tried of having to face the correct way when placing directional blocks?, say no more, hold shift to place directional blocks where ever you are",
+        "description": "Tried of having to face the correct way when placing directional blocks? say no more, hold shift to place directional blocks where ever you are",
         "uuid": "a00bb59e-dcbc-492a-be02-9c96e42f4be0",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]

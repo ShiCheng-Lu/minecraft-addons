@@ -15,14 +15,6 @@ export const blocks: {
         type: MinecraftBlockTypes.stickyPiston,
         rotation: [Direction.up, Direction.down, Direction.south, Direction.west, Direction.north, Direction.east]
     },
-    "minecraft:dropper": {
-        type: MinecraftBlockTypes.dropper,
-        rotation: [Direction.up, Direction.down, Direction.north, Direction.east, Direction.south, Direction.west]
-    },
-    "minecraft:dispenser": {
-        type: MinecraftBlockTypes.dispenser,
-        rotation: [Direction.up, Direction.down, Direction.north, Direction.east, Direction.south, Direction.west]
-    },
     "minecraft:observer": {
         type: MinecraftBlockTypes.observer,
         rotation: [Direction.down, Direction.up, Direction.south, Direction.west, Direction.north, Direction.east]
