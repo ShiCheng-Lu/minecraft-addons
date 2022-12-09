@@ -1,4 +1,5 @@
-import { world, Location, Direction, Vector, MolangVariableMap, Block, BlockLocation } from "@minecraft/server";
+import { world, Location, Direction, Vector, MolangVariableMap, Block } from "@minecraft/server";
+import { intersect, dirToVec, toVector, fromVector } from "./helper"
 
 world.events.tick.subscribe((arg) => {
     for (const player of world.getPlayers()) {
@@ -8,7 +9,12 @@ world.events.tick.subscribe((arg) => {
         const block = player.getBlockFromViewVector({ maxDistance: 10 })
         if (block === null) return;
 
-        const [face, rotation] = intersect(player.headLocation, player.viewVector, block.location)
+        // player crosshair origin is -0.025 lower than headLocation while crouching
+        //                            +0.1   higher                  while standing
+        const origin = new Vector(player.headLocation.x, player.headLocation.y - 0.025, player.headLocation.z)
+        const [face, x, y] = intersect(origin, player.viewVector, block.location)
+
+        const rotation = get_rotation(x, y, face) * 90;
 
         putIndicator(block, face, rotation);
     }
@@ -66,76 +72,18 @@ function get_rotation(x: number, y: number, dir: Direction) {
     return 0;
 }
 
-function intersect(location: Location, ray: Vector, blockLoc: BlockLocation): [Direction, number] {
-    const block = new Vector(blockLoc.x, blockLoc.y, blockLoc.z);
-    block.x += (ray.x > 0) ? 0 : 1;
-    block.y += (ray.y > 0) ? 0 : 1;
-    block.z += (ray.z > 0) ? 0 : 1;
-
-    const dz = (block.z - location.z) / ray.z;
-    const dy = (block.y - location.y) / ray.y;
-    const dx = (block.x - location.x) / ray.x;
-
-    var face = Direction.up, x = 0, y = 0, z = 0;
-    switch (Math.max(dx, dy, dz)) {
-        case dz:
-            face = (ray.z > 0) ? Direction.north : Direction.south;
-            // intersect at xy plane is
-            x = dz * ray.x + location.x - blockLoc.x
-            y = dz * ray.y + location.y - blockLoc.y
-            break;
-        case dy:
-            face = (ray.y > 0) ? Direction.down : Direction.up;
-            // intersect at xz plane is
-            x = dy * ray.x + location.x - blockLoc.x
-            y = dy * ray.z + location.z - blockLoc.z
-            break;
-        case dx:
-            face = (ray.x > 0) ? Direction.west : Direction.east;
-            // intersect at yz plane is
-            x = dx * ray.y + location.y - blockLoc.y
-            y = dx * ray.z + location.z - blockLoc.z
-            break;
-    }
-    const rotation = get_rotation(x, y, face)
-
-    return [face, rotation * 90]
-}
-
 function putIndicator(block: Block, face: Direction, rotation: number) {
-    const location = new Location(block.location.x, block.location.y, block.location.z);
-    const direction = new Vector(0, 0, 0);
-    const offset = 0.501
-
-    switch (face) {
-        case Direction.up:
-            location.y += offset;
-            direction.y = -1;
-            break;
-        case Direction.down:
-            location.y -= offset;
-            direction.y = 1;
-            break;
-        case Direction.north:
-            location.z -= offset;
-            direction.z = -1;
-            break;
-        case Direction.east:
-            location.x += offset;
-            direction.x = 1;
-            break;
-        case Direction.south:
-            location.z += offset;
-            direction.z = 1;
-            break;
-        case Direction.west:
-            location.x -= offset;
-            direction.x = -1;
-            break;
-    }
+    const direction = dirToVec.get(face)!!;
+    const offsetVec = Vector.multiply(direction, 0.501);
+    const location = Vector.add(toVector(block.location), offsetVec)
 
     const varMap = new MolangVariableMap()
-    varMap.setVector3("variable.rotation", new Vector(rotation, 0, 0))
-    varMap.setVector3("variable.direction", direction)
-    block.dimension.spawnParticle((rotation < 0) ? "direction:particle_center" : "direction:particle", location, varMap)
+    varMap.setVector3("v.rotation", new Vector(rotation, 0, 0))
+    varMap.setVector3("v.direction", direction)
+
+    block.dimension.spawnParticle(
+        (rotation < 0) ? "direction:particle_center" : "direction:particle",
+        fromVector(location, Location),
+        varMap
+    )
 }

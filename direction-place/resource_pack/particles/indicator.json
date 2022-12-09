@@ -29,7 +29,7 @@
 				"facing_camera_mode": "direction_z",
 				"direction": {
 					"mode": "custom",
-					"custom_direction": ["v.direction.x", "v.direction.y", "v.direction.z"]
+					"custom_direction": ["v.direction.x", "-v.direction.y", "v.direction.z"]
 				},
 				"uv": {
 					"texture_width": 16,
