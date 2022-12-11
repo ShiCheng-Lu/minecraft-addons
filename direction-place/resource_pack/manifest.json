@@ -2,7 +2,7 @@
     "format_version": 2,
     "header": {
         "name": "Directional Place",
-        "description": "",
+        "description": "Indicator particle resource for directional place",
         "uuid": "a8c759ba-63dc-4269-ab49-b7593b00fbde",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]

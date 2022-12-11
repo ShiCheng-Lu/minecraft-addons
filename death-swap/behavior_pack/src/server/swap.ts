@@ -42,7 +42,7 @@ export async function start(given_options?: Partial<DeathSwapOptions>) {
 
     const players = world.getAllPlayers();
     if (started) return players.forEach(player => {
-        player.runCommandAsync("say @s game already started")
+        player.tell("game already started")
     });
 
     options = Object.assign(options, default_option, given_options);
@@ -142,6 +142,5 @@ export function update() {
 export function end() {
     world.events.tick.unsubscribe(update);
 }
-
 
 export * as DeathSwap from "./swap.js"

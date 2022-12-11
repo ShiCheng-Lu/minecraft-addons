@@ -1,9 +1,8 @@
-import { Vector2, Vector3 } from "gametest-maths";
-import { Dimension, Entity, TickEvent, world, World } from "mojang-minecraft"
+import { Dimension, Location, Vector, world } from "@minecraft/server"
 
 function runUnsafeCommand(cmd: string, dim: Dimension) {
     try {
-        dim.runCommand(cmd);
+        dim.runCommandAsync(cmd);
     } catch (e) { console.warn(`failed to run in ${dim}: ${cmd}`); }
 }
 
@@ -23,31 +22,31 @@ export function encodeInt32(n1: number, n2: number, n3: number, n4: number) {
 
 export class Display {
     data: number[][];
-    size: Vector2;
+    size: Vector;
 
     // size x, y must be multiples of 2
-    constructor(size: Vector2, location: Vector3) {
+    constructor(size: Vector, location: Location) {
         this.destroy();
 
-        this.size = size.clone();
+        this.size = new Vector(size.x, size.y, size.z);
         this.data = new Array(size.x).fill(0).map(() => new Array(size.y).fill(0));
 
         const overworld = world.getDimension('overworld');
 
-        const spawnLoc = location.toBlockLocation();
+        const spawnLoc = location;
 
-        runUnsafeCommand(`scoreboard objectives add rgb dummy rgb`, overworld);
-        runUnsafeCommand(`scoreboard objectives setdisplay belowname rgb`, overworld);
+        const rgbData = world.scoreboard.addObjective("rgb", "rgb")
+        world.scoreboard.setObjectiveAtDisplaySlot("belowname", { objective: rgbData })
 
-        const temp = new Vector3();
         for (let x = 0; x < size.x; ++x) {
             for (let y = 0; y < size.y; ++y) {
-                temp.set(x * 0.2, 2, y * 0.2);
-                
+                const loc = new Location(x * 0.2 + location.z, 2 + location.y, y * 0.2 + location.z)
+
                 const e = overworld.spawnEntity("display:pixel", spawnLoc);
+
                 e.addTag(`x${x}`);
                 e.addTag(`y${y}`);
-                e.runCommand(`tp @s ${temp.add(location).toString()}`)
+                e.teleport(loc, overworld, 0, 0);
             }
         }
         console.warn(`created display ${location.toString()}`);
@@ -84,4 +83,3 @@ export class Display {
         runUnsafeCommand(`scoreboard objectives remove rgb`, overworld);
     }
 }
-
