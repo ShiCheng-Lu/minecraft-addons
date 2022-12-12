@@ -27,7 +27,7 @@ export async function start(given_options) {
     const players = world.getAllPlayers();
     if (started)
         return players.forEach(player => {
-            player.runCommandAsync("say @s game already started");
+            player.tell("game already started");
         });
     options = Object.assign(options, default_option, given_options);
     console.warn("started game");
