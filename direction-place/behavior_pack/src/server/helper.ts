@@ -20,6 +20,7 @@ init()
 
 /**
  * Ray trace against a block to find face, faceLocationX, and faceLocationY
+ * return values are consistent with ItemUseOn event's faceLocation
  * @param location 
  * @param ray 
  * @param blockLoc 
@@ -28,9 +29,9 @@ init()
 export function intersect(location: Vector, ray: Vector, blockLoc: BlockLocation): [Direction, number, number] {
     // add one if the ray is comming from positive direction, block is the corner closest to location
     const block = new Vector(
-        blockLoc.x + +(ray.x > 0),
-        blockLoc.y + +(ray.y > 0),
-        blockLoc.z + +(ray.z > 0),
+        blockLoc.x + +(ray.x < 0),
+        blockLoc.y + +(ray.y < 0),
+        blockLoc.z + +(ray.z < 0),
     );
 
     // time the ray intersect each plane
@@ -47,7 +48,7 @@ export function intersect(location: Vector, ray: Vector, blockLoc: BlockLocation
         case dt.y:
             return [(ray.y > 0) ? Direction.down : Direction.up, res.x, res.z]
         case dt.x:
-            return [(ray.x > 0) ? Direction.west : Direction.east, res.x, res.y]
+            return [(ray.x > 0) ? Direction.west : Direction.east, res.y, res.z]
         default:
             return [Direction.up, 0, 0] // unreachable
     }
