@@ -1,5 +1,5 @@
 {
-    "name": "{{name}}",
+    "name": "auto-craft",
     "version": "1.0.0",
     "description": "",
     "main": "behavior_pack/src/index.js",
@@ -7,7 +7,7 @@
         "build": "tsc -p .",
         "postbuild": "node postbuild.js",
         "prepackage": "tsc -p .",
-        "package": "zip -rq {{name}}.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
+        "package": "zip -rq auto-craft.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
     },
     "keywords": [
         "minecraft"

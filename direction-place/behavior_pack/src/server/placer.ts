@@ -1,6 +1,5 @@
 import { world, Player, BeforeItemUseOnEvent, BlockProperties, Direction, DirectionBlockProperty, system, MinecraftBlockTypes, EntityInventoryComponent } from "@minecraft/server";
 import { blocks } from "./blocks";
-import "./indicator";
 
 world.events.beforeItemUseOn.subscribe((arg: BeforeItemUseOnEvent) => {
     const player = arg.source;
@@ -18,7 +17,9 @@ world.events.beforeItemUseOn.subscribe((arg: BeforeItemUseOnEvent) => {
         const facingProperty = perm.getProperty(BlockProperties.facingDirection) as DirectionBlockProperty
         const directionProperty = perm.getProperty(BlockProperties.direction) as DirectionBlockProperty
 
-        const dirProperty = (facingProperty ?? directionProperty)
+        const dirProperty = facingProperty ?? directionProperty;
+
+        if (dirProperty === null) return; // item is not directional
 
         // direction, rotation
         if (dirProperty.validValues.includes(facing)) {
