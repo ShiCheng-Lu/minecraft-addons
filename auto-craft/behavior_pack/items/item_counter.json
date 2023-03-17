@@ -1,0 +1,25 @@
+{
+    "format_version": "1.19.40",
+    "minecraft:item": {
+      "description": {
+        "identifier": "farm:item_counter",
+        "category": "Equipment"
+      },
+      "components": {
+        "minecraft:creative_category": { "parent": "" },
+        "minecraft:icon": {
+          "texture": "wool"
+        },
+        "minecraft:render_offsets": {
+          "main_hand": {
+            "first_person": {
+              "scale": [0, 0, 0]
+            },
+            "third_person": {
+              "scale": [0, 0, 0]
+            }
+          }
+        }
+      }
+    }
+  }

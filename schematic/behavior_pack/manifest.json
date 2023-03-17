@@ -1,9 +1,9 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Auto Craft",
+        "name": "Schematic",
         "description": "",
-        "uuid": "db7a50c5-7a35-4765-bb8a-a93eb0f75f24",
+        "uuid": "98d9e722-e7bd-467a-ab10-7d7eac153d12",
         "version": "1.0.0",
         "min_engine_version": [1, 19, 50]
     },
@@ -11,7 +11,7 @@
         {
             "type": "script",
             "language": "javascript",
-            "uuid": "f34ec964-aded-4104-b695-82778cf7819c",
+            "uuid": "3f38baed-74a9-4574-b955-698c3ec4d60b",
             "entry": "scripts/server/index.js",
             "version": "1.0.0"
         }
@@ -31,7 +31,7 @@
             "version": "1.0.0-beta"
         },
         {
-            "uuid":"e558c7f9-d7b7-441f-b9e7-df31c97ed748",
+            "uuid":"8f46c715-5e4d-46bd-9a66-52a0cc3bb23b",
             "version": "1.0.0"
         }
     ]

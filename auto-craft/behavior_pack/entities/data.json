@@ -1,0 +1,21 @@
+{
+    "format_version": "1.18.10",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "farm:data",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:type_family": {},
+            "minecraft:inventory": {
+                "container_type": "chest_boat",
+                "inventory_size": 27,
+                "can_be_siphoned_from": true
+            },
+            "minecraft:physics": {}
+        },
+        "events": {}
+    }
+}
