@@ -1,0 +1,30 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "death-count",
+        "description": "",
+        "uuid": "407d1cbc-04c6-4405-80e2-ed8f7e3e1cfd",
+        "version": "1.0.0",
+        "min_engine_version": [1, 19, 50]
+    },
+    "modules": [
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "d47bbef2-6ab8-4bb2-a88a-4f7f242eec64",
+            "entry": "scripts/server/index.js",
+            "version": "1.0.0"
+        }
+    ],
+    "capabilities": [ "script_eval" ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.3.0-beta"
+        },
+        {
+            "uuid":"6594eea5-3262-4ed7-a877-05a2f7a9fb34",
+            "version": "1.0.0"
+        }
+    ]
+}

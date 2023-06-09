@@ -45,13 +45,6 @@ system.runInterval(() => {
     }
 }, NATURAL_REGENERATION_TIME);
 
-world.afterEvents.chatSend.subscribe((e) => {
-    try {
-        const h = parseInt(e.message);
-        updateMaxHealth(Math.floor(Math.log(h) * HEALTH_INCREASE_SCALE - 1))
-    } finally {}
-})
-
 world.afterEvents.playerSpawn.subscribe(() => {
     const players = world.getAllPlayers();
     updateMaxHealth(Math.floor(Math.log(players.length) * HEALTH_INCREASE_SCALE - 1));

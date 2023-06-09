@@ -1,5 +1,5 @@
 {
-    "name": "any-portal",
+    "name": "death-count",
     "version": "1.0.0",
     "description": "",
     "main": "behavior_pack/src/index.js",
@@ -7,16 +7,19 @@
         "build": "tsc -p .",
         "postbuild": "node postbuild.js",
         "prepackage": "tsc -p .",
-        "package": "zip -rq any-portal.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
+        "package": "zip -rq death-count.mcaddon behavior_pack resource_pack -x behavior_pack/src/**"
     },
     "keywords": [
         "minecraft"
     ],
     "author": "ShiCheng Lu",
     "license": "MIT",
+    "dependencies": {},
     "devDependencies": {
         "@minecraft/server": "beta",
-        "fs-extra": "^11.1.0",
-        "typescript": "^4.5.2"
+        "@minecraft/server-ui": "beta",
+        "@minecraft/server-gametest": "beta",
+        "typescript": "^4.5.2",
+        "fs-extra": "^11.1.0"
     }
 }

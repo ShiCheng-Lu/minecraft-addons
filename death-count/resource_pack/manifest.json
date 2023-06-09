@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "death-count",
+        "description": "",
+        "uuid": "6594eea5-3262-4ed7-a877-05a2f7a9fb34",
+        "version": "1.0.0",
+        "min_engine_version": [1, 19, 50]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "7b438030-c31d-4ae6-b576-963327cd26bf",
+            "version": "1.0.0"
+        }
+    ],
+    "dependencies": []
+}
