@@ -5,8 +5,8 @@ let health = 20;
 let max_health = 20;
 
 const HEALTH_INCREASE_SCALE = 1 / Math.log(1.15);
-const NATURAL_REGENERATION_TIME = 4 * 20;
-const SHARED_HEALTH_PROPERTY = "shared_health";
+const NATURAL_REGENERATION_TIME = 5 * 20;
+const SHARED_HEALTH_PROPERTY = "shared_health"; // datastore to keep track of health, not sure if needed
 
 world.afterEvents.worldInitialize.subscribe((e) => {
     const def = new DynamicPropertiesDefinition();
@@ -16,6 +16,7 @@ world.afterEvents.worldInitialize.subscribe((e) => {
     health = world.getDynamicProperty(SHARED_HEALTH_PROPERTY) as number;
 })
 
+// set health for all players to targetHealth
 function syncHealth(targetHealth: number) {
     health = Math.min(targetHealth, max_health);
     world.setDynamicProperty(SHARED_HEALTH_PROPERTY, health);
@@ -26,6 +27,7 @@ function syncHealth(targetHealth: number) {
     })
 }
 
+// update max health for all players
 function updateMaxHealth(amplifier: number) {
     // set all players max hp with health boost
     world.getAllPlayers().forEach(player => {
@@ -39,6 +41,7 @@ function updateMaxHealth(amplifier: number) {
     syncHealth(health + boost);
 }
 
+// natural regen
 system.runInterval(() => {
     if (health < max_health) {
         syncHealth(health + 1);
@@ -55,20 +58,20 @@ world.afterEvents.playerLeave.subscribe(() => {
     updateMaxHealth(Math.floor(Math.log(players.length) * HEALTH_INCREASE_SCALE - 1));
 })
 
+// when one player is hurt, damage all players
 world.afterEvents.entityHurt.subscribe((e) => {
-    if (e.hurtEntity.typeId != "minecraft:player") return;
-
     world.getAllPlayers().forEach(player => {
         player.applyDamage(e.damage);
     });
 
     syncHealth(health - e.damage);
+}, { // only trigger for
+    entityTypes: ["minecraft:player"]
 })
 
+// reset health after players die
 world.afterEvents.entityDie.subscribe((e) => {
-    try {
-        if (e.deadEntity.typeId == "minecraft:player") {
-            health = max_health;
-        }
-    } finally {}
+    health = max_health;
+}, { // only trigger for
+    entityTypes: ["minecraft:player"]
 })
