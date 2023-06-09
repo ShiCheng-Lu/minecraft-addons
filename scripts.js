@@ -14,7 +14,7 @@ function newProject(name) {
         "{{uuid-resource}}": randomUUID(),
         "{{uuid-resource-module}}": randomUUID(),
         "{{name}}": name,
-        "{{pack-name}}": process.argv[4]
+        "{{pack-name}}": process.argv[4] || name
     }
 
     for (fileName of ["behavior_pack/manifest.json", "resource_pack/manifest.json", "package.json"]) {
