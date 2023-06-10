@@ -22,14 +22,18 @@
 				"max_lifetime": 0.051
 			},
 			"minecraft:particle_motion_parametric": {
-				"rotation": "v.rotation.x"
+				"rotation": "v.transform.speed"
 			},
 			"minecraft:particle_appearance_billboard": {
 				"size": [0.5, 0.5],
 				"facing_camera_mode": "direction_z",
 				"direction": {
 					"mode": "custom",
-					"custom_direction": ["v.direction.x", "-v.direction.y", "v.direction.z"]
+					"custom_direction": [
+						"v.transform.direction_x", 
+						"-v.transform.direction_y", 
+						"v.transform.direction_z"
+					]
 				},
 				"uv": {
 					"texture_width": 16,

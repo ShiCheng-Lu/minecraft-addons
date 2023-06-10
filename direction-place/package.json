@@ -1,6 +1,6 @@
 {
     "name": "direction-place",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "",
     "main": "behavior_pack/src/index.js",
     "scripts": {
@@ -16,7 +16,7 @@
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-        "@minecraft/server": "1.1.0-beta.release.1.19.50",
+        "@minecraft/server": "beta",
         "typescript": "^4.5.2",
         "fs-extra": "^11.1.0"
     }

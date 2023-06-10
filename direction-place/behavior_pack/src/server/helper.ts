@@ -1,4 +1,4 @@
-import { Direction, Vector, BlockLocation } from "@minecraft/server";
+import { Direction, Vector, Vector3 } from "@minecraft/server";
 
 export const dirToVec = new Map<Direction, Vector>()
 export const vecToDir = new Map<Vector, Direction>()
@@ -26,7 +26,7 @@ init()
  * @param blockLoc 
  * @returns 
  */
-export function intersect(location: Vector, ray: Vector, blockLoc: BlockLocation): [Direction, number, number] {
+export function intersect(location: Vector, ray: Vector3, blockLoc: Vector3): [Direction, number, number] {
     // add one if the ray is comming from positive direction, block is the corner closest to location
     const block = new Vector(
         blockLoc.x + +(ray.x < 0),
@@ -52,17 +52,4 @@ export function intersect(location: Vector, ray: Vector, blockLoc: BlockLocation
         default:
             return [Direction.up, 0, 0] // unreachable
     }
-}
-
-/**
- * convert any Location/Position type to a vector
- * @param vecLike 
- * @returns 
- */
-export function toVector(vecLike: { x: number, y: number, z: number }): Vector {
-    return new Vector(vecLike.x, vecLike.y, vecLike.z);
-}
-
-export function fromVector<T>(vec: Vector, type: any): T {
-    return new type(vec.x, vec.y, vec.z);
 }
