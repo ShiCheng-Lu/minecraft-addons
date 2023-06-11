@@ -70,7 +70,7 @@ world.afterEvents.entityHurt.subscribe((e) => {
 })
 
 // reset health after players die
-world.afterEvents.entityDie.subscribe((e) => {
+world.afterEvents.entityDie.subscribe(() => {
     health = max_health;
 }, { // only trigger for
     entityTypes: ["minecraft:player"]

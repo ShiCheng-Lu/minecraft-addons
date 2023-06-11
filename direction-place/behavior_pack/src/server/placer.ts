@@ -7,6 +7,11 @@ world.afterEvents.itemUseOn.subscribe((arg: ItemUseOnAfterEvent) => {
     const player = arg.source;
     if (!(player instanceof Player) || !player.isSneaking) return;
 
+    // if the block is not a full block
+    if (arg.faceLocation.x != 1 && arg.faceLocation.x != 0 &&
+        arg.faceLocation.y != 1 && arg.faceLocation.y != 0 &&
+        arg.faceLocation.z != 1 && arg.faceLocation.z != 0) return;
+
     // get the block that would have been placed by the item use
     const blockLocation = Vector.add(arg.block.location, dirToVec.get(arg.blockFace)!)
     const block = arg.block.dimension.getBlock(blockLocation)!

@@ -3,6 +3,27 @@ import { intersect, dirToVec } from "./helper"
 
 system.runInterval(displayIndicator)
 
+const nonSolidFullBlocks: string[] = [
+    "minecraft:leaves",
+    "minecraft:leaves2",
+    "minecraft:azalea_leaves",
+    "minecraft:azalea_leaves_flowered",
+    "minecraft:cherry_leaves",
+    "minecraft:mangrove_leaves",
+    "minecraft:mangrove_roots",
+    "minecraft:hopper",
+    "minecraft:scaffolding",
+    "minecraft:glass",
+    "minecraft:stained_glass",
+    "minecraft:cauldron",
+    "minecraft:composter",
+    "minecraft:undyed_shulker_box",
+    "minecraft:shulker_box",
+    "minecraft:piston",
+    "minecraft:sticky_piston",
+    "minecraft:ice",
+]
+
 function displayIndicator() {
     for (const player of world.getPlayers()) {
         // only activate indicator if sneaking
@@ -11,6 +32,10 @@ function displayIndicator() {
         const block = player.getBlockFromViewDirection({ maxDistance: 12 })
         if (block == null) return; // null or undefined
 
+        if (!block.isSolid() && !nonSolidFullBlocks.includes(block.typeId)) {
+            // console.warn(`${block.typeId} is not solid`)
+            return;
+        }
         // player crosshair origin is -0.025 lower than headLocation while crouching
         //                            +0.1   higher                  while standing
         const origin = Vector.add(player.getHeadLocation(), {x: 0, y: -0.025, z: 0})
