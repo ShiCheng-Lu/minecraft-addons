@@ -1,7 +1,7 @@
-import { world, MinecraftEffectTypes, Player, EntityHealthComponent, Vector3, XYRotation, Dimension } from "@minecraft/server";
+import { world, system, MinecraftEffectTypes, Vector, EntityHealthComponent, Vector3, Dimension } from "@minecraft/server";
 
 let started: boolean = false;
-let live_players: Player[];
+let live_players: string[];
 let grace_period: number;
 
 type DeathSwapOptions = {
@@ -34,70 +34,92 @@ export const default_funky: DeathSwapOptions = {
     swapFunction: funkySwap
 }
 
-let options: DeathSwapOptions;
+let options: DeathSwapOptions = {
+    grace_period: 20 * 60 * 3,
+    avg_swap_time: 20 * 60 * 5,
+    cx: 0,
+    cz: 0,
+    dist: 200,
+    range: 1000,
+    swapFunction: swap
+};
 let swapFunction: () => void;
+let runId: number;
 
-export async function start(given_options?: Partial<DeathSwapOptions>) {
-    swapFunction = given_options?.swapFunction ?? swap
+export function start(given_options: DeathSwapOptions) {
+    options = given_options
+    swapFunction = options.swapFunction ?? swap
 
     const players = world.getAllPlayers();
-    if (started) return players.forEach(player => {
-        player.tell("game already started")
-    });
 
-    options = Object.assign(options, default_option, given_options);
-    console.warn("started game");
+    world.getDimension("overworld").runCommand(`spreadplayers ${options.cx} ${options.cz} ${options.dist} ${options.range} @a[m=s]`)
 
-    const res = await world.getDimension("overworld").runCommandAsync(`spreadplayers ${options.cx} ${options.cz} ${options.dist} ${options.range} @a[m=s]`)
-
-    live_players = players;
-    console.warn(JSON.stringify(live_players));
+    live_players = players.map(p => p.name);
+    console.warn(live_players.join(", "));
 
     players.forEach(player => {
-        player.addEffect(MinecraftEffectTypes.resistance, 10, 10, false);
+        player.addEffect(MinecraftEffectTypes.resistance, 10 * 20, { amplifier: 5, showParticles: false });
     })
-    
-    world.events.tick.subscribe(update);
-    
+
+    if (runId !== undefined) {
+        system.clearRun(runId)
+    }
+    runId = system.runInterval(update);
+
     grace_period = options.grace_period + 200;
 }
 
 export function swap() {
-    shuffle(live_players);
-    console.warn(JSON.stringify(live_players));
+    const players = world.getAllPlayers().filter(p => live_players.includes(p.name))
+
+    console.warn(`${players.length}`)
+
+    shuffle(players);
 
     const locations: Vector3[] = []
     const dimensions: Dimension[] = []
-    const rotation: XYRotation[] = []
+    const rotation: Vector3[] = []
 
-    live_players.forEach((player, index) => {
+    players.forEach((player, index) => {
         locations[index] = player.location
-        rotation[index] = player.rotation
+        rotation[index] = Vector.add(player.location, player.getViewDirection())
         dimensions[index] = player.dimension
     });
     // tp players to helpers
     for (let i = 0; i < live_players.length - 1; ++i) {
-        live_players[i].teleport(locations[i + 1], dimensions[i + 1], rotation[i + 1].x, rotation[i + 1].y)
+        players[i].teleport(locations[i + 1], {
+            dimension: dimensions[i + 1], 
+            facingLocation: rotation[i + 1]
+        })
     }
+    players[live_players.length - 1].teleport(locations[0], {
+        dimension: dimensions[0],
+        facingLocation: rotation[0]
+    })
 }
 
 export function funkySwap() {
-    const OVERWORLD = world.getDimension("overworld");
+    const players = world.getAllPlayers().filter(p => live_players.includes(p.name))
     // select random pair of players
-    const p1 = live_players[Math.floor(Math.random() * live_players.length)];
-    const p2 = live_players[Math.floor(Math.random() * live_players.length)];
+    const p1 = players[Math.floor(Math.random() * live_players.length)];
+    const p2 = players[Math.floor(Math.random() * live_players.length)];
 
     const l1 = p1.location
     const l2 = p2.location
     const d1 = p1.dimension
     const d2 = p2.dimension
-    const r1 = p1.rotation
-    const r2 = p2.rotation
+    const r1 = Vector.add(l1, p1.getViewDirection())
+    const r2 = Vector.add(l2, p2.getViewDirection())
 
-    p1.teleport(l2, d2, r2.x, r2.y)
-    p2.teleport(l1, d1, r1.x, r1.y)
+    p1.teleport(l2, {
+        dimension: d2,
+        facingLocation: r2,
+    })
+    p2.teleport(l1, {
+        dimension: d1, 
+        facingLocation: r1,
+    })
 }
-
 
 export function shuffle<T>(a: T[]) {
     let j: number, x: T;
@@ -113,34 +135,38 @@ export function shuffle<T>(a: T[]) {
 }
 
 export function update() {
-    const deads = world.getAllPlayers()
-        .filter((p) => live_players.includes(p) && (p.getComponent('health') as EntityHealthComponent).value <= 0)
-        .map((p) => p.nameTag);
+    const players = world.getAllPlayers().filter(p => live_players.includes(p.name))
+    const deads = players.filter(player => (player.getComponent('health') as EntityHealthComponent).value <= 0)
+            .map((p) => p.nameTag);
 
     const names = deads.join(", ")
     if (deads.length > 0) {
         // display deads names?
-        live_players = live_players.filter(player => {
-            if (deads.includes(player.name)) {
+        live_players = players.filter(player => {
+            if (deads.includes(player.nameTag)) {
                 return false;
             }
             player.onScreenDisplay.setTitle(`${names} ate shit`, { fadeInSeconds: 0.5, fadeOutSeconds: 0.5, staySeconds: 2 })
             return true;
-        })
+        }).map(p => p.name)
     }
 
     if (grace_period > 0) {
+        console.warn(`${grace_period}`)
         grace_period--;
         return;
     }
+    
     if (Math.random() < 1 / options.avg_swap_time) {
+        console.warn(`SWAP`)
         swap();
         grace_period = options.grace_period;
     }
 }
 
 export function end() {
-    world.events.tick.unsubscribe(update);
+    system.clearRun(runId);
+    started = false
 }
 
 export * as DeathSwap from "./swap.js"
