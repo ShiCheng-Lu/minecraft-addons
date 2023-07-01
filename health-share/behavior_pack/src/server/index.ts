@@ -1,4 +1,4 @@
-import { EntityHealthComponent, MinecraftEffectTypes, DynamicPropertiesDefinition } from "@minecraft/server";
+import { EntityHealthComponent, MinecraftEffectTypes, DynamicPropertiesDefinition, EntityDamageCause } from "@minecraft/server";
 import { world, system } from "@minecraft/server"
 
 let health = 20;
@@ -14,9 +14,14 @@ world.afterEvents.worldInitialize.subscribe((e) => {
     e.propertyRegistry.registerWorldDynamicProperties(def);
 
     health = world.getDynamicProperty(SHARED_HEALTH_PROPERTY) as number;
+
+    const objective = world.scoreboard.addObjective("damageTaken", "Damage Taken");
+    world.scoreboard.setObjectiveAtDisplaySlot("sidebar", {objective: objective});
 })
 
 function syncHealth(targetHealth: number) {
+    if (Number.isFinite(targetHealth)) return;
+
     health = Math.min(targetHealth, max_health);
     world.setDynamicProperty(SHARED_HEALTH_PROPERTY, health);
 
@@ -27,6 +32,7 @@ function syncHealth(targetHealth: number) {
 }
 
 function updateMaxHealth(amplifier: number) {
+    if (Number.isFinite(amplifier)) return;
     // set all players max hp with health boost
     world.getAllPlayers().forEach(player => {
         player.removeEffect(MinecraftEffectTypes.healthBoost);
@@ -45,16 +51,10 @@ system.runInterval(() => {
     }
 }, NATURAL_REGENERATION_TIME);
 
-world.afterEvents.chatSend.subscribe((e) => {
-    try {
-        const h = parseInt(e.message);
-        updateMaxHealth(Math.floor(Math.log(h) * HEALTH_INCREASE_SCALE - 1))
-    } finally {}
-})
-
 world.afterEvents.playerSpawn.subscribe(() => {
     const players = world.getAllPlayers();
     updateMaxHealth(Math.floor(Math.log(players.length) * HEALTH_INCREASE_SCALE - 1));
+    players[0].runCommand("scoreboard players add @a damageTaken 0")
 })
 
 world.afterEvents.playerLeave.subscribe(() => {
@@ -63,13 +63,27 @@ world.afterEvents.playerLeave.subscribe(() => {
 })
 
 world.afterEvents.entityHurt.subscribe((e) => {
-    if (e.hurtEntity.typeId != "minecraft:player") return;
+    // if (e.hurtEntity.typeId != "minecraft:player") return;
+    if (e.damageSource.cause == EntityDamageCause.suicide) return;
 
     world.getAllPlayers().forEach(player => {
-        player.applyDamage(e.damage);
+        player.applyDamage(e.damage, {cause: EntityDamageCause.suicide});
     });
 
     syncHealth(health - e.damage);
+
+    const scoreboardIdentity = e.hurtEntity.scoreboardIdentity;
+    if (scoreboardIdentity) {
+        const objective = world.scoreboard.getObjective("damageTaken");
+        const score = objective.getScore(scoreboardIdentity);
+        console.warn(`${e.damageSource.cause} ${scoreboardIdentity.displayName} ${score + e.damage} health: ${health}`)
+        scoreboardIdentity.getScore(objective);
+        scoreboardIdentity.setScore(objective, score + e.damage);
+        world.scoreboard.setObjectiveAtDisplaySlot("sidebar", {objective: objective});
+    } else {
+        console.warn(`no scoreboard identity`)
+    }
+    e.hurtEntity.runCommand("scoreboard players add @a damageTaken 0")
 })
 
 world.afterEvents.entityDie.subscribe((e) => {
