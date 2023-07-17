@@ -8,6 +8,7 @@ const HEALTH_INCREASE_SCALE = 1 / Math.log(1.15);
 const NATURAL_REGENERATION_TIME = 5 * 20;
 const SHARED_HEALTH_PROPERTY = "shared_health"; // datastore to keep track of health, not sure if needed
 
+// setup scoreboard
 world.afterEvents.worldInitialize.subscribe((e) => {
     const def = new DynamicPropertiesDefinition();
     def.defineNumber(SHARED_HEALTH_PROPERTY);
@@ -54,12 +55,14 @@ system.runInterval(() => {
     }
 }, NATURAL_REGENERATION_TIME);
 
+// increase max health when a plyaer join
 world.afterEvents.playerSpawn.subscribe(() => {
     const players = world.getAllPlayers();
     updateMaxHealth(Math.floor(Math.log(players.length) * HEALTH_INCREASE_SCALE - 1));
     players[0].runCommand("scoreboard players add @a damageTaken 0")
 })
 
+// decrease max health when a player leaves
 world.afterEvents.playerLeave.subscribe(() => {
     const players = world.getAllPlayers();
     updateMaxHealth(Math.floor(Math.log(players.length) * HEALTH_INCREASE_SCALE - 1));
