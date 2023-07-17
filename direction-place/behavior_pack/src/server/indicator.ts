@@ -29,16 +29,22 @@ function displayIndicator() {
         // only activate indicator if sneaking
         if (!player.isSneaking) continue;
 
-        const block = player.getBlockFromViewDirection({ maxDistance: 12 })
+        const raycastResult = player.getBlockFromViewDirection({ maxDistance: 12 })
+        if (raycastResult == null) return;
+
+        const block = raycastResult.block;
+        // const face = raycastResult.face;
+        // const rotation = remap_rotation(get_rotation(raycastResult.faceLocation), face) * 90;
+
+
         if (block == null) return; // null or undefined
 
         if (!block.isSolid() && !nonSolidFullBlocks.includes(block.typeId)) {
             // console.warn(`${block.typeId} is not solid`)
             return;
         }
-        // player crosshair origin is -0.025 lower than headLocation while crouching
-        //                            +0.1   higher                  while standing
-        const origin = Vector.add(player.getHeadLocation(), {x: 0, y: -0.025, z: 0})
+        // player crosshair origin is +0.1 higher than headLocation
+        const origin = Vector.add(player.getHeadLocation(), {x: 0, y: 0.1, z: 0})
         const blockCenter = Vector.add(block.location, {x: 0.5, y: 0.5, z: 0.5})
 
         if (Vector.distance(origin, blockCenter) > 6) return;
@@ -51,6 +57,27 @@ function displayIndicator() {
     }
 }
 
+// function remap_rotation(rotation: number, direction: Direction): number {
+//     switch (direction) {
+//         case Direction.Up:
+//             return rotation;
+//         case Direction.Up:
+//             return rotation;
+//         case Direction.Up:
+//             return rotation;
+//         case Direction.Up:
+//             return rotation;
+//         case Direction.Up:
+//             return rotation;
+//         case Direction.Up:
+//             return rotation;
+//         default:
+//             return -1;
+//     }
+// }
+
+
+
 // shit code... hard to fix
 function get_rotation(x: number, y: number, dir: Direction) {
     if (Math.abs(x - 0.5) < 0.25 && Math.abs(y - 0.5) < 0.25) {
@@ -59,45 +86,45 @@ function get_rotation(x: number, y: number, dir: Direction) {
     else if (x > y && 1 - x > y) {
         // buttom
         switch (dir) {
-            case Direction.up: return 3;
-            case Direction.down: return 3;
-            case Direction.north: return 3;
-            case Direction.east: return 0;
-            case Direction.south: return 3;
-            case Direction.west: return 2;
+            case Direction.Up: return 3;
+            case Direction.Down: return 3;
+            case Direction.North: return 3;
+            case Direction.East: return 0;
+            case Direction.South: return 3;
+            case Direction.West: return 2;
         }
     }
     else if (x > y && 1 - x < y) {
         // right
         switch (dir) {
-            case Direction.up: return 2;
-            case Direction.down: return 0;
-            case Direction.north: return 2;
-            case Direction.east: return 1;
-            case Direction.south: return 0;
-            case Direction.west: return 1;
+            case Direction.Up: return 2;
+            case Direction.Down: return 0;
+            case Direction.North: return 2;
+            case Direction.East: return 1;
+            case Direction.South: return 0;
+            case Direction.West: return 1;
         }
     }
     else if (x < y && 1 - x > y) {
         // left
         switch (dir) {
-            case Direction.up: return 0;
-            case Direction.down: return 2;
-            case Direction.north: return 0;
-            case Direction.east: return 3;
-            case Direction.south: return 2;
-            case Direction.west: return 3;
+            case Direction.Up: return 0;
+            case Direction.Down: return 2;
+            case Direction.North: return 0;
+            case Direction.East: return 3;
+            case Direction.South: return 2;
+            case Direction.West: return 3;
         }
     }
     else if (x < y && 1 - x < y) {
         // top
         switch (dir) {
-            case Direction.up: return 1;
-            case Direction.down: return 1;
-            case Direction.north: return 1;
-            case Direction.east: return 2;
-            case Direction.south: return 1;
-            case Direction.west: return 0;
+            case Direction.Up: return 1;
+            case Direction.Down: return 1;
+            case Direction.North: return 1;
+            case Direction.East: return 2;
+            case Direction.South: return 1;
+            case Direction.West: return 0;
         }
     }
     return 0;

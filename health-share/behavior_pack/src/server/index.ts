@@ -67,7 +67,7 @@ world.afterEvents.playerLeave.subscribe(() => {
 
 // when one player is hurt, damage all players
 world.afterEvents.entityHurt.subscribe((e) => {
-    // if (e.hurtEntity.typeId != "minecraft:player") return;
+    if (e.hurtEntity.typeId != "minecraft:player") return;
     if (e.damageSource.cause == EntityDamageCause.suicide) return;
 
     world.getAllPlayers().forEach(player => {
@@ -85,7 +85,7 @@ world.afterEvents.entityHurt.subscribe((e) => {
         scoreboardIdentity.setScore(objective, score + e.damage);
         world.scoreboard.setObjectiveAtDisplaySlot("sidebar", {objective: objective});
     } else {
-        console.warn(`no scoreboard identity`)
+        // console.warn(`no scoreboard identity`)
     }
     e.hurtEntity.runCommand("scoreboard players add @a damageTaken 0")
 

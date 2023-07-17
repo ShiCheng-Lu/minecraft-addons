@@ -9,12 +9,12 @@ function init() {
         dirToVec.set(dir, vec);
         vecToDir.set(vec, dir);
     }
-    add(Direction.east, Vector.right);
-    add(Direction.west, Vector.left);
-    add(Direction.up, Vector.up);
-    add(Direction.down, Vector.down);
-    add(Direction.south, Vector.forward);
-    add(Direction.north, Vector.back);
+    add(Direction.East, Vector.right);
+    add(Direction.West, Vector.left);
+    add(Direction.Up, Vector.up);
+    add(Direction.Down, Vector.down);
+    add(Direction.South, Vector.forward);
+    add(Direction.North, Vector.back);
 }
 init()
 
@@ -44,12 +44,12 @@ export function intersect(location: Vector, ray: Vector3, blockLoc: Vector3): [D
 
     switch (dt_max) {
         case dt.z:
-            return [(ray.z > 0) ? Direction.north : Direction.south, res.x, res.y]
+            return [(ray.z > 0) ? Direction.North : Direction.South, res.x, res.y]
         case dt.y:
-            return [(ray.y > 0) ? Direction.down : Direction.up, res.x, res.z]
+            return [(ray.y > 0) ? Direction.Down : Direction.Up, res.x, res.z]
         case dt.x:
-            return [(ray.x > 0) ? Direction.west : Direction.east, res.y, res.z]
+            return [(ray.x > 0) ? Direction.West : Direction.East, res.y, res.z]
         default:
-            return [Direction.up, 0, 0] // unreachable
+            return [Direction.Up, 0, 0] // unreachable
     }
 }

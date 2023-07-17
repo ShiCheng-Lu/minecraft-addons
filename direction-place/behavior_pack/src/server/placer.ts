@@ -40,7 +40,7 @@ function manhattanDist(a: Vector3, b: Vector3) {
     return Math.abs(gap.x) + Math.abs(gap.y) + Math.abs(gap.z)
 }
 
-function get_rotation(location: Vector3) {
+export function get_rotation(location: Vector3) {
     location = Vector.add(location, { x: -0.5, y: -0.5, z: -0.5 })
 
     if (location.x != 0.5 && location.x > 0.25 && manhattanDist(location, Vector.right) < 1.5) {
